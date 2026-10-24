@@ -66,7 +66,7 @@ Run history, configuration versioning, rollback, inbox reassignment, backlog man
 
 ## Questions to consider
 
-- How will someone know what the agent can do and whether it is ready?
+- How will you make creating and using an agent clear and pleasant? What should the user see and do at each step?
 - What should a customer understand from the latest result, and which details would you leave out?
 - Why do your data model and API boundaries fit this experience?
 - Which edge cases matter most here, and what should the customer experience when they occur?

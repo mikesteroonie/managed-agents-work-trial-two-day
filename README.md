@@ -18,7 +18,7 @@ Keep configuration to three inputs:
 - **Instructions:** one Markdown document containing the task and useful context. Support writing or pasting text; importing an `.md` file is optional.
 - **Inbox:** one existing AgentMail inbox whose incoming emails trigger the agent.
 
-The model and available AgentMail tools are fixed for the trial. Make their capabilities understandable without adding settings for them.
+The model and available AgentMail tools are fixed for the trial. Make their capabilities understandable without adding settings for them. You choose the interaction flow, guidance, validation feedback, and how much detail to expose.
 
 ### Frontend
 
@@ -43,9 +43,15 @@ Two customer requests should work through this interface:
 - Enforce pause in the backend: no new executions start while paused. Choose and explain what happens to queued work, active runs, and emails arriving during the pause.
 - Execute in the background: acknowledge incoming HTTP events before the agent finishes, and continue working when the browser closes. You choose the execution mechanism; a separate worker or queue is not prescribed.
 
-Decide how repeated events, interrupted execution, and retries should behave; implement a coherent approach and explain its limits.
-
 Create synthetic payloads matching the documented webhook contract and a small local replay script that posts them to your receiving endpoint. It should exercise the same event-handling path as live delivery. Local replay is sufficient for the demo; see the [AgentMail integration guide](docs/AGENTMAIL.md) for endpoints and testing details.
+
+### When an execution fails
+
+A customer relying on an agent needs to understand what happened and what they can do next when it fails.
+
+Implement **one meaningful execution-failure path end to end** using the supplied harness. Choose the case, such as a model or tool failure. Persist useful input/activity and failure information, and give the customer a clear explanation and a usable next step. You choose the recovery experience; automatic retry is not required.
+
+Be prepared to discuss what would happen if the execution process stopped before recording a result, or an event arrived again. Automatic crash recovery and concurrent duplicate-delivery guarantees are outside the required build.
 
 ## What we provide
 
@@ -61,10 +67,10 @@ Run history, configuration versioning, rollback, inbox reassignment, backlog man
 
 ## Questions to consider
 
-- How will someone understand what the agent can do and when it runs?
-- What should they see first when inspecting a result or failure?
-- Can different instructions work through the same product and data model?
-- How do edits, pause/resume, and repeated events affect work already in progress?
+- How will someone know what the agent can do and whether it is ready?
+- What should they see first in a result, and which details should be available on demand?
+- Why do your data model and API boundaries fit this experience?
+- What can the customer safely do next after your chosen failure?
 
 ## Working together
 

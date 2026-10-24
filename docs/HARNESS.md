@@ -8,9 +8,9 @@ The team will document the fixed model and available AgentMail tool capabilities
 
 The harness accepts agent configuration, email input/context, and tool bindings. It emits execution events, tool activity, and a result or failure. Instructions and result content come from the user-defined agent; there are no preset business workflows.
 
-The harness runs locally and may call a hosted model with supplied credentials. Its test modes cover success, delay, tool activity, and failure. Use local action recording when testing generated email actions.
+The harness runs locally and may call a hosted model with supplied credentials. Its test modes cover success, delay, tool activity, and failure, including a tool failure after some activity. Use local action recording when testing generated email actions.
 
-You own application storage, execution coordination, duplicate handling, and retry behavior. Follow your README's execution requirements; no separate worker or job system is supplied or prescribed.
+Use these modes to implement the one execution-failure experience required in the README. You choose what to retain and how the customer can proceed. Application storage, execution coordination, and recovery policy are yours to design. Automatic crash recovery and concurrent duplicate-delivery guarantees are not required; no worker or job system is supplied or prescribed.
 
 ## AgentMail integration
 

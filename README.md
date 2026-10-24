@@ -38,7 +38,12 @@ Demonstrate two differently configured agents using the same creation, event-tri
 
 Use the supplied AgentMail API adapter and local event delivery/replay tooling. Replayed email events must enter the same backend event-handling path used by the AgentMail integration; an event should start a run without someone pressing Run in the UI.
 
-The user should also be able to update an agent's configuration, leave while work runs in the background, and return to inspect its run history.
+The user should also be able to leave while work runs in the background and return to inspect its run history. Handle these two customer requests:
+
+1. **Change how an operating agent behaves.** “Our escalation contact has changed. Future emails should CC the new person, but I still need to understand what happened on previous emails.” Let the user update instructions or supplied context. New events received after saving should use the updated configuration. Decide what happens to already queued or running work, and make it possible to understand which configuration produced a past result.
+2. **Pause an agent while fixing it.** “This agent is responding incorrectly. Stop starting new work while I fix the instructions, then let me resume it.” Provide pause/resume controls enforced by the backend. Decide what happens to emails received while paused and to executions already in progress, and explain that behavior in the product.
+
+Keep these changes focused. A version comparison UI, rollback system, backlog management screen, and cancellation of running work are not required. You own the behavior and data model needed to make these two requests understandable and reliable.
 
 ## Scope
 

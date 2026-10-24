@@ -49,7 +49,7 @@ Create synthetic payloads matching the documented webhook contract and a small l
 
 A customer relying on an agent needs to understand what happened and what they can do next when it fails.
 
-Implement **one meaningful execution-failure path end to end** using the supplied harness. Choose the case, such as a model or tool failure. Persist useful input/activity and failure information, and give the customer a clear explanation and a usable next step. You choose the recovery experience; automatic retry is not required.
+Handle **one terminal run failure reported by the supplied harness**, from persisted application state to a clear explanation and usable next step in the UI. Retain useful input/activity and failure information. The harness owns the agent loop and recovery within it; you do not implement tool retries. A recovered tool error can still produce a successful run. You choose what the customer can do after a terminal failure; starting a new run is optional.
 
 Be prepared to discuss what would happen if the execution process stopped before recording a result, or an event arrived again. Automatic crash recovery and concurrent duplicate-delivery guarantees are outside the required build.
 

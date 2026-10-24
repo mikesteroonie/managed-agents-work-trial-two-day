@@ -1,16 +1,16 @@
 # Local agent execution
 
-The AgentMail team will provide a local execution harness and document its tested interface before the trial. It supplies model execution, predictable test modes, and a way to record proposed external actions locally.
+The AgentMail team will provide a local execution harness and document its tested interface before the trial. It owns the model/tool loop, tool dispatch and error feedback, execution limits, and configured recovery within the loop. It also supplies predictable test modes and local recording of proposed external actions. This is a local execution abstraction, not a recreation of all AgentCore services.
 
 The team will document the fixed model and available AgentMail tool capabilities. You implement the tool bindings using the supplied AgentMail client; model selection and tool-permissions settings are outside the product scope.
 
 ## Shared execution contract
 
-The harness accepts agent configuration, email input/context, and tool bindings. It emits execution events, tool activity, and a result or failure. Instructions and result content come from the user-defined agent; there are no preset business workflows.
+The harness accepts agent configuration, email input/context, and tool bindings. It emits activity and an explicit final success or failure outcome. A tool error is intermediate activity: the loop may recover and still succeed. Use the final outcome to determine run status. Instructions and result content come from the user-defined agent; there are no preset business workflows.
 
-The harness runs locally and may call a hosted model with supplied credentials. Its test modes cover success, delay, tool activity, and failure, including a tool failure after some activity. Use local action recording when testing generated email actions.
+The harness runs locally and may call a hosted model with supplied credentials. Its test modes cover success, delay, tool activity, and terminal failure, including failure after some recorded activity. Use local action recording when testing generated email actions.
 
-Use these modes to implement the one execution-failure experience required in the README. You choose what to retain and how the customer can proceed. Application storage, execution coordination, and recovery policy are yours to design. Automatic crash recovery and concurrent duplicate-delivery guarantees are not required; no worker or job system is supplied or prescribed.
+Use the terminal-failure mode to implement the experience required in the README. You own invocation, application storage, presentation of the outcome, and the customer's next step. Any optional action to start another run is an application decision; retries and recovery inside the supplied loop are not your responsibility. Automatic crash recovery and concurrent duplicate-delivery guarantees are not required; no worker or job system is supplied or prescribed.
 
 ## AgentMail integration
 

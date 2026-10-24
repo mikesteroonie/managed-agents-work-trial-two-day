@@ -10,33 +10,28 @@ We want a shared product and backend that handles those responsibilities so a cu
 
 ## Who is the customer?
 
-Build for someone configuring and operating email agents for their team or customers. They know the job they want done and need a product that handles the setup and execution. Different users will bring different instructions, context, and workflows. For example:
-
-- A billing agent might process invoices and CC the appropriate people.
-- A support agent might investigate an incoming issue and identify which engineer to CC.
-
-These illustrate different uses of the same infrastructure. The product should support customer-defined behavior through configuration and the supplied harness, without changes to application code for each use case.
+Build for someone configuring and operating email agents for their team or customers. They know the job they want done and need a product that handles the setup and execution. Users supply their own instructions and context; the builder should support different email-agent behaviors without application-code changes for each use case.
 
 Rho, an AgentMail customer whose team wants to create agents for its customers, is one example of this need. The platform should work across customers and use cases.
 
-The [example scenarios](fixtures/company.md) and inputs are synthetic. They are starting configurations to try, not business rules to hardcode into the product.
-
 ## What we'd like you to build
 
-Build this as a **Managed Agents** destination in the sidebar of an existing console. Assume the user is already logged in and has an AgentMail workspace with inboxes. Use the supplied console shell; focus on the agent experience inside it.
+Build this as a **Managed Agents** destination in the sidebar of an existing console. Assume the user is already logged in, has API credentials, and has an AgentMail workspace with inboxes. Use the supplied console shell; focus on the agent builder and its backend.
 
 Someone should be able to **create an agent, define its behavior, connect an inbox, and inspect the work triggered by incoming email**.
 
 The user should be able to:
 
-- Create agents with different instructions and connect them to an AgentMail inbox and the supplied AgentMail tools.
+- Create and save agents with user-defined instructions, then connect them to an AgentMail inbox.
 - Have an incoming AgentMail `message.received` event trigger the appropriate agent through the execution harness.
 - Understand its progress, inspect its input, output and tool activity, and see when execution fails.
 - Return later and find saved agents and their results.
 
-Demonstrate two differently configured agents using the same creation, event-triggered execution, and inspection flow. Billing and support are supplied examples; neither requires a separate screen, API, or business-specific implementation.
+Demonstrate the builder with different user-defined instructions through the same creation, event-triggered execution, and inspection flow. We do not provide preset agent configurations.
 
-Use the supplied AgentMail API adapter and local event delivery/replay tooling. Replayed email events must enter the same backend event-handling path used by the AgentMail integration; an event should start a run without someone pressing Run in the UI.
+Use AgentMail's existing [API and webhook service](https://docs.agentmail.to/webhooks-overview). You own the API integration, webhook registration, receiving/parsing/validating events, and routing an event to the appropriate agent. Use the existing SDK or direct API calls; you do not need to build a webhook delivery service or a general API simulator.
+
+Create synthetic webhook payloads that match the documented contract and a local delivery/replay script targeting your backend intake. Replays must exercise the same event-handling path as received webhooks. Local replay is sufficient for testing the receiver without a public tunnel; live HTTP webhook delivery requires a reachable URL. An event should start a run without someone pressing Run in the UI.
 
 The user should also be able to leave while work runs in the background and return to inspect its run history. Handle these two customer requests:
 
@@ -49,9 +44,9 @@ Keep these changes focused. A version comparison UI, rollback system, backlog ma
 
 Build a working Next.js frontend and backend with application data persisted in Postgres. You own the configuration experience, schema, APIs, validation, background execution, and execution integration.
 
-Accept incoming events and execute agents in the background, independently of both an open browser and the event's HTTP request. Do not hold that request open until the agent finishes. Decide what happens when an event arrives again, execution is interrupted, or someone wants to retry. Implement a coherent approach within the available time and make its limitations clear. The retry policy, controls, and data model are yours to design.
+Accept incoming events and execute agents in the background, independently of both an open browser and the event's HTTP request. Do not hold that request open until the agent finishes. You choose how to run background work; a separate worker or queue is not prescribed. Decide what happens when an event arrives again, execution is interrupted, or someone wants to retry. Implement a coherent approach within the available time and make its limitations clear. The retry policy, controls, and data model are yours to design.
 
-Keep the infrastructure bounded: one existing workspace, AgentMail inboxes and email events, and the supplied harness and AgentMail toolset. Generalize across email-agent use cases within AgentMail. Other connectors, a connector marketplace, arbitrary-code hosting, a visual workflow builder, authentication, and deployment are outside scope. Record external actions through local stubs; do not send real email or execute payments.
+Keep the infrastructure bounded: one existing workspace, AgentMail inboxes and email events, and the supplied execution harness. AgentMail is the only connector. Other connectors, a connector marketplace, arbitrary-code hosting, a visual workflow builder, authentication, and cloud deployment are outside scope. Use the harness's local action-recording mode when testing generated email actions.
 
 ## Questions to consider
 
@@ -65,7 +60,7 @@ Keep the infrastructure bounded: one existing workspace, AgentMail inboxes and e
 
 ## Working together
 
-Start by exploring the examples and sketching a user flow and technical approach. We'll discuss them together, then you will spend most of the session building.
+Start by exploring the existing AgentMail API and sketching the builder's user flow and technical approach. We'll discuss them together, then you will spend most of the session building.
 
 Use us as teammates: ask questions, challenge assumptions, and tell us when something blocks you. Before the end, we'll have someone try the product so you can observe it and make an adjustment.
 
@@ -73,6 +68,6 @@ At the end, show the working experience and walk through the decisions behind it
 
 ## Development environment
 
-Use Next.js and TypeScript, Postgres, and the supplied local execution harness. We provide a console shell with an assumed logged-in workspace, database access, model access, the AgentMail API adapter, sample inboxes/messages, and local webhook delivery/replay tooling. Local simulation uses the same integration contract and does not require a public webhook URL or AWS deployment. You choose the application architecture.
+Use Next.js and TypeScript, Postgres, and the supplied local execution harness. We provide the console shell with an assumed logged-in workspace, AgentMail API credentials, database access, model access, and harness documentation. You build the AgentMail integration and local event-testing tools. You choose the application architecture.
 
 See [setup](docs/SETUP.md) and [the harness contract](docs/HARNESS.md) for their preparation status. Keep credentials on the server and out of source control.

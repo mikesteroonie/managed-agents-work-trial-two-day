@@ -1,11 +1,11 @@
 # Local setup
 
-The runnable starter is still being prepared by the AgentMail team. This repository currently contains the product brief, synthetic inputs, and scaffolding placeholders. The team will complete and verify this setup before the work trial.
+The runnable starter is still being prepared by the AgentMail team. This repository currently contains the product brief and scaffolding placeholders. The team will complete and verify the starter before the work trial.
 
-The prepared environment will include a Next.js console shell with a Managed Agents sidebar destination, an assumed logged-in user and workspace, an empty Postgres database, local agent execution, and model access.
+We provide a Next.js console shell with a Managed Agents sidebar destination, an assumed logged-in user and workspace, AgentMail API credentials, an empty Postgres database, and the local execution harness with model access.
 
-The AgentMail integration will include an API adapter for the supplied inboxes/messages and tools, plus local webhook delivery/replay. AgentMail is the only connector. Replayed incoming-email events must reach the application's backend event intake; local iteration must not require a public webhook URL or AWS deployment. Authentication and the surrounding console are supplied context, not candidate build tasks.
+You build the agent builder and its backend, integrate with AgentMail's existing API and webhook service, and create the webhook parsing/validation and local delivery/replay tools. Use your own synthetic event payloads based on the documented AgentMail contract. A custom API simulator is not required.
 
-Exact installation, environment configuration, start, database connection, and harness-check commands will be added here. You should not need to create a cloud account or deploy to AWS.
+Exact installation, credential configuration, start, database connection, and harness-check commands will be added here. Local event replay should let you test your receiver without a public tunnel. Live HTTP webhook delivery requires a reachable URL; cloud deployment is not required for the trial.
 
 Once you add application migrations and checks, document how to run them here or in [design notes](../DECISIONS.md).

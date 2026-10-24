@@ -2,10 +2,10 @@
 
 The runnable starter is still being prepared by the AgentMail team. This repository currently contains the product brief and scaffolding placeholders. The team will complete and verify the starter before the work trial.
 
-We provide a Next.js console shell with a Managed Agents sidebar destination, an assumed logged-in user and workspace, AgentMail API credentials, an empty Postgres database, and the local execution harness with model access.
+We provide a Next.js console shell with a Managed Agents sidebar destination, an assumed logged-in user and workspace, a configured server-side AgentMail SDK client and credentials, an empty Postgres database, and the local execution harness with model access.
 
-You build the agent builder and its backend, integrate with AgentMail's existing API and webhook service, and create the webhook parsing/validation and local delivery/replay tools. Use your own synthetic event payloads based on the documented AgentMail contract. A custom API simulator is not required.
+You build the agent builder and its backend, use the supplied client to integrate with AgentMail, and implement webhook registration, intake/validation, and local replay tooling. See the [AgentMail integration guide](AGENTMAIL.md) for the relevant endpoints and replay explanation.
 
-Exact installation, credential configuration, start, database connection, and harness-check commands will be added here. Local event replay should let you test your receiver without a public tunnel. Live HTTP webhook delivery requires a reachable URL; cloud deployment is not required for the trial.
+The team will add exact installation, environment configuration, client import/example, start, database connection, and harness-check commands here. Local replay is sufficient for testing; cloud deployment is not required.
 
 Once you add application migrations and checks, document how to run them here or in [design notes](../DECISIONS.md).

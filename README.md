@@ -1,80 +1,75 @@
 # Managed agents
 
-AgentMail gives agents email inboxes. Build a **Managed Agents** section in the AgentMail console where customers can configure agents that respond to incoming email, without building and hosting a separate service for each one.
+AgentMail gives agents email inboxes. We want customers to create agents that work with incoming email without building and hosting a separate service for each one.
 
 ## The problem
 
-Customers have different jobs for agents to do. Today, getting one running involves more than describing the task: someone needs to connect its inputs and tools, run it, retain its state, and make its work understandable.
+Customers know the job they want an agent to do, but getting it running also requires connecting an inbox, executing instructions, retaining state, and understanding what happened. Build a **Managed Agents** section in the AgentMail console that handles that setup and operation.
 
-We want a shared product and backend that handles those responsibilities so a customer can create an agent by configuring its behavior and connecting it to an AgentMail inbox. **AgentMail is the only connector for this trial:** use its API for inbox and message access, and its incoming-email events to trigger agents.
-
-## Who is the customer?
-
-Build for someone configuring and operating email agents for their team or customers. They know the job they want done and need a product that handles the setup and execution. Users supply their own instructions and context; the builder should support different email-agent behaviors without application-code changes for each use case.
-
-Rho, an AgentMail customer whose team wants to create agents for its customers, is one example of this need. The platform should work across customers and use cases.
+Build for someone creating email agents for their team or customers. Rho, whose team wants to create agents for its customers, is one example. The product should support different instructions and use cases without application-code changes for each one.
 
 ## What we'd like you to build
 
-Build this as a **Managed Agents** destination in the sidebar of an existing console. Assume the user is already logged in, has API credentials, and has an AgentMail workspace with inboxes. Use the supplied console shell; focus on the agent builder and its backend.
+Assume the user is already logged in and has an AgentMail workspace, inboxes, and API credentials. Managed Agents belongs in the existing console sidebar. **AgentMail is the only connector; incoming `message.received` events trigger the agents.**
 
-Someone should be able to **create an agent, define its behavior, connect an inbox, and inspect the work triggered by incoming email**.
+Keep configuration to three inputs:
 
-Keep agent configuration to three inputs:
-
-- **Name:** a label that helps the user find the agent later.
-- **Instructions:** one Markdown document describing the task and any useful context. Support writing or pasting Markdown; a plain text editor is sufficient. Importing an `.md` file is optional.
+- **Name:** a label for finding the agent later.
+- **Instructions:** one Markdown document containing the task and useful context. Support writing or pasting text; importing an `.md` file is optional.
 - **Inbox:** one existing AgentMail inbox whose incoming emails trigger the agent.
 
-Treat the model and available AgentMail tool capabilities as fixed for the trial. Make the capabilities understandable; provider selection, model settings, document management, and a tool-permissions editor are outside scope.
+The model and available AgentMail tools are fixed for the trial. Make their capabilities understandable without adding settings for them.
 
-Through the frontend, the user should be able to:
+### Frontend
 
-- Create and save an agent with those inputs.
-- Find saved agents, reopen their configuration, and see their linked inbox and whether they are ready to receive email events.
-- Open the latest run and inspect its input, status, output, tool activity, and any execution error.
-- Refresh or return later without losing saved configuration or results.
+- Create and save an agent with those three inputs.
+- List saved agents and reopen their configuration. Show the linked inbox, pause state, and execution status.
+- Edit and save the instructions/context of an existing agent.
+- Pause and resume an agent, making clear when these changes take effect.
+- Browse run history and inspect a run's input, status, output, tool activity, errors, and the configuration used. Retain everything after refresh.
 
-Incoming AgentMail `message.received` events should trigger the appropriate agent through the execution harness without a UI Run action.
+Two customer requests should work through this interface:
 
-Demonstrate the builder with different user-defined instructions through the same creation, event-triggered execution, and inspection flow. We do not provide preset agent configurations.
+- **“Our escalation contact changed.”** Save revised instructions so future emails use the new contact, while earlier results remain understandable.
+- **“Stop this agent while I fix it.”** Pause new executions, change the instructions, then resume.
 
-Use AgentMail's existing [API and webhook service](https://docs.agentmail.to/webhooks-overview). You own the API integration, webhook registration, receiving/parsing/validating events, and routing an event to the appropriate agent. Use the existing SDK or direct API calls; you do not need to build a webhook delivery service or a general API simulator.
+### Backend
 
-Create synthetic webhook payloads that match the documented contract and a local delivery/replay script targeting your backend intake. Replays must exercise the same event-handling path as received webhooks. Local replay is sufficient for testing the receiver without a public tunnel; live HTTP webhook delivery requires a reachable URL. An event should start a run without someone pressing Run in the UI.
+- Build application APIs and a Postgres schema to create, list, and retrieve saved agents and their run data. You choose the route structure, validation, tables, and relationships.
+- Use the supplied AgentMail client for inbox/message access and agent tool bindings. Implement webhook registration, the receiving endpoint, event parsing/validation, and inbox-to-agent routing using AgentMail's existing services.
+- Trigger the supplied execution harness from incoming events and persist results, status, tool activity, and failures for the UI. Execution must not depend on someone pressing Run.
 
-Extend the same interface with instruction/context editing, pause/resume controls, and a run-history list. Users should be able to open an earlier run, see its outcome and the configuration used, and understand when a saved change takes effect. Work continues in the background while they leave the page. Handle these two customer requests:
+- Implement backend updates for an existing agent's instructions and persisted pause/resume state. New events after a saved edit use the updated configuration; keep past runs attributable to the configuration they used.
+- Enforce pause in the backend: no new executions start while paused. Choose and explain what happens to queued work, active runs, and emails arriving during the pause.
+- Execute in the background: acknowledge incoming HTTP events before the agent finishes, and continue working when the browser closes. You choose the execution mechanism; a separate worker or queue is not prescribed.
 
-1. **Change how an operating agent behaves.** “Our escalation contact has changed. Future emails should CC the new person, but I still need to understand what happened on previous emails.” Let the user update instructions or supplied context. New events received after saving should use the updated configuration. Decide what happens to already queued or running work, and make it possible to understand which configuration produced a past result.
-2. **Pause an agent while fixing it.** “This agent is responding incorrectly. Stop starting new work while I fix the instructions, then let me resume it.” Provide pause/resume controls enforced by the backend. Decide what happens to emails received while paused and to executions already in progress, and explain that behavior in the product.
+Decide how repeated events, interrupted execution, and retries should behave; implement a coherent approach and explain its limits.
 
-Keep these changes focused. A version comparison UI, rollback system, backlog management screen, and cancellation of running work are not required. You own the behavior and data model needed to make these two requests understandable and reliable.
+Create synthetic payloads matching the documented webhook contract and a small local replay script that posts them to your receiving endpoint. It should exercise the same event-handling path as live delivery. Local replay is sufficient for the demo; see the [AgentMail integration guide](docs/AGENTMAIL.md) for endpoints and testing details.
 
-## Scope
+## What we provide
 
-Build a working Next.js frontend and backend with application data persisted in Postgres. You own the configuration experience, schema, APIs, validation, background execution, and execution integration.
+Next.js/TypeScript and a console shell, an empty Postgres database, a configured **server-side AgentMail SDK client**, trial credentials, and a local execution harness with model access and predictable test modes. Use the harness's local action-recording mode when testing generated email actions.
 
-Accept incoming events and execute agents in the background, independently of both an open browser and the event's HTTP request. Do not hold that request open until the agent finishes. You choose how to run background work; a separate worker or queue is not prescribed. Decide what happens when an event arrives again, execution is interrupted, or someone wants to retry. Implement a coherent approach within the available time and make its limitations clear. The retry policy, controls, and data model are yours to design.
+You own the product screens, application APIs, schema, event handling, and execution integration. The [setup guide](docs/SETUP.md), [AgentMail endpoint guide](docs/AGENTMAIL.md), and [harness contract](docs/HARNESS.md) describe the starter and its preparation status. Keep credentials server-side and out of source control.
 
-Keep the infrastructure bounded: one existing workspace, AgentMail inboxes and email events, and the supplied execution harness. AgentMail is the only connector. Other connectors, a connector marketplace, arbitrary-code hosting, a visual workflow builder, authentication, and cloud deployment are outside scope. Use the harness's local action-recording mode when testing generated email actions.
+## Boundaries
+
+Keep this to one existing workspace and email agents. Authentication, additional connectors, model settings, tool-permission editors, document management, arbitrary-code hosting, workflow builders, and cloud deployment are outside scope. Use AgentMail's existing webhook service; do not build a delivery service.
+
+Version-comparison screens, rollback, inbox reassignment, backlog management, and cancellation of running work are not required.
 
 ## Questions to consider
 
-- How will a first-time user understand what the agent can do and when it runs?
+- How will someone understand what the agent can do and when it runs?
 - What should they see first when inspecting a result or failure?
 - Can different instructions work through the same product and data model?
 - How do edits, pause/resume, and repeated events affect work already in progress?
 
 ## Working together
 
-Start by exploring the existing AgentMail API and sketching the builder's user flow and technical approach. We'll discuss them together, then you will spend most of the session building.
+Start with a sketch of the user flow and technical approach. Discuss it with us, then spend most of the trial building. Ask questions and surface blockers as you go.
 
-Use us as teammates: ask questions, challenge assumptions, and tell us when something blocks you. Before the end, we'll have someone try the product so you can observe it and make an adjustment.
+Demonstrate different user-defined instructions through the same creation, email-triggered execution, and inspection flow. We'll have someone try the product so you can observe it and make an adjustment.
 
-At the end, show the working experience and walk through the decisions behind it. Keep brief [design notes](DECISIONS.md) and the commands needed to run and check your work. You may use AI tools, libraries, and existing components; be ready to explain and modify what you build.
-
-## Development environment
-
-Use Next.js and TypeScript, Postgres, and the supplied local execution harness. We provide the console shell with an assumed logged-in workspace, AgentMail API credentials, database access, model access, and harness documentation. You build the AgentMail integration and local event-testing tools. You choose the application architecture.
-
-See [setup](docs/SETUP.md) and [the harness contract](docs/HARNESS.md) for their preparation status. Keep credentials on the server and out of source control.
+Keep brief [design notes](DECISIONS.md) and commands for running and checking your work. AI tools and existing components are welcome; be ready to explain and modify what you build.

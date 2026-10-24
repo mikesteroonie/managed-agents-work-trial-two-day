@@ -2,7 +2,7 @@
 
 The AgentMail team will provide a local execution harness and document its tested interface before the trial. It supplies model execution, predictable test modes, and a way to record proposed external actions locally.
 
-The team will document the fixed model and available AgentMail tool capabilities. You implement the API tool bindings; model selection and tool-permissions settings are not part of the product UI for this trial.
+The team will document the fixed model and available AgentMail tool capabilities. You implement the tool bindings using the supplied AgentMail client; model selection and tool-permissions settings are outside the product scope.
 
 ## Shared execution contract
 
@@ -10,16 +10,10 @@ The harness accepts agent configuration, email input/context, and tool bindings.
 
 The harness runs locally and may call a hosted model with supplied credentials. Its test modes cover success, delay, tool activity, and failure. Use local action recording when testing generated email actions.
 
-You own application storage, execution coordination, duplicate handling, and retry behavior. No separate worker or job system is supplied or prescribed.
+You own application storage, execution coordination, duplicate handling, and retry behavior. Follow your README's execution requirements; no separate worker or job system is supplied or prescribed.
 
 ## AgentMail integration
 
-AgentMail is the only connector. Use the existing API or SDK with the provided credentials for inbox/message access and the [existing webhook service](https://docs.agentmail.to/webhooks-overview) for incoming email events.
+AgentMail is the only connector. The [integration guide](AGENTMAIL.md) lists the existing endpoints and explains local event replay.
 
-You own webhook registration, the receiving endpoint, parsing and validation, inbox-to-agent routing, and any AgentMail tool bindings used by the agent. Use the documented signature-verification mechanism for received HTTP webhooks. You are consuming AgentMail's service, not rebuilding its webhook delivery infrastructure.
-
-## Local event testing
-
-Create your own synthetic webhook payloads matching the documented AgentMail event contract and a local delivery/replay script targeting your receiving endpoint. Account for verification in your local test setup and document how it works.
-
-Replay should exercise the same event-handling path as live delivery and trigger execution without a UI Run action. Local replay does not require a public tunnel. To receive live HTTP deliveries, register a reachable endpoint using the [webhook API](https://docs.agentmail.to/api-reference/webhooks/create). Cloud deployment is not part of the trial.
+Use the supplied client for inbox/message access and your tool bindings. You own webhook registration, the receiving endpoint, signature verification, payload validation, and inbox-to-agent routing. Incoming events must trigger the harness through your backend without a UI Run action.

@@ -1,0 +1,13 @@
+{
+  "event_id": "event_invoice_001",
+  "message_id": "message_invoice_001",
+  "inbox_id": "inbox_harbor_invoices",
+  "thread_id": "thread_inv_1001",
+  "received_at": "2026-10-20T09:00:00Z",
+  "from": "billing@juniper.example",
+  "to": [
+    "invoices@harbor.example"
+  ],
+  "subject": "Invoice INV-1001 — engineering cloud usage",
+  "text": "Juniper Services invoice INV-1001. Purchase order ENG-204. Engineering cloud usage for September. Amount USD 2500. Due 2026-11-15. Please confirm receipt and include the person who can confirm this purchase."
+}

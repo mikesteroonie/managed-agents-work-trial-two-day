@@ -1,0 +1,13 @@
+{
+  "event_id": "event_invoice_003",
+  "message_id": "message_invoice_003",
+  "inbox_id": "inbox_harbor_invoices",
+  "thread_id": "thread_inv_1001",
+  "received_at": "2026-10-20T09:00:00Z",
+  "from": "billing@juniper.example",
+  "to": [
+    "invoices@harbor.example"
+  ],
+  "subject": "Re: Invoice INV-1001 — corrected amount",
+  "text": "Please replace the earlier amount for Juniper Services invoice INV-1001. Purchase order ENG-204. Engineering cloud usage for September. Corrected amount USD 2300. Due 2026-11-15. All other details are unchanged."
+}

@@ -1,20 +1,27 @@
-# Fictional company context
+# Rho billing agent scenario
 
-These details are invented for the work trial.
+Rho is the real customer context for this trial: their team wants to create agents for customers without building and hosting each agent service.
 
-Northstar Desk sells shared-workspace booking software to small teams. Its developer wants an assistant to prepare customer support reply drafts.
+Everything below is invented for the exercise. Harbor Operations is a fictional customer workspace, and all contacts use reserved example domains. These are not Rho's operating policies.
 
-## Known facts
+## Workflow
 
-- Workspace administrators can export booking history as CSV from Settings → Data export.
-- Exports contain completed and canceled bookings from the last 12 months.
-- Deleted bookings cannot be restored through the application.
-- Workspace administrators can invite teammates from Settings → Members.
-- Billing questions require review by the Northstar Desk team. The agent cannot issue refunds or change a subscription.
-- A reply should acknowledge when a requested fact or action is not supported by the supplied information.
+An invoice arrives at invoices@harbor.example. The agent should identify the invoice details, prepare a useful reply, and identify who needs to be CC'd in the thread.
 
-## Starting agent instructions
+For this example, accounts payable handles invoice intake. The purchase owner can confirm the invoice relates to their team's order.
 
-You help Northstar Desk customers. Draft a concise, helpful email reply using the company context. Ask for missing information when necessary. Do not claim to have taken an action you cannot perform. Flag requests requiring a person to review them.
+## Routing context
 
-The user can replace or refine these instructions. The application should make that configuration understandable.
+| Role | Address | Responsibility |
+| --- | --- | --- |
+| Accounts payable | ap@harbor.example | Invoice intake and billing questions |
+| Engineering purchase owner | engineering-owner@harbor.example | Engineering purchases; purchase order ENG-204 |
+| IT purchase owner | it-owner@harbor.example | IT purchases; purchase order IT-108 |
+
+The available routing context may be incomplete. An annual software license without a purchase order could belong to more than one team. Do not invent an owner or claim payment has been approved.
+
+## Starting instructions
+
+Read the incoming invoice email. Extract the useful invoice information, draft a response, and select relevant CC recipients from the supplied context. Explain uncertainty when the owner or invoice details are unclear. Do not approve or execute payments.
+
+The user should be able to configure the agent's instructions. You decide how to present its output and any proposed action.

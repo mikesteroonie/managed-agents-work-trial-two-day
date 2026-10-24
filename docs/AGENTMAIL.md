@@ -16,13 +16,13 @@ These are existing AgentMail endpoints, not routes you need to reimplement. Use 
 | Register incoming-email delivery | `POST /v0/webhooks`, subscribing to `message.received` | [Create webhook](https://docs.agentmail.to/api-reference/webhooks/create) |
 | Reply, including CC recipients when relevant | `POST /v0/inboxes/:inbox_id/messages/:message_id/reply` | [Reply to message](https://docs.agentmail.to/api-reference/inboxes/messages/reply) |
 
-The [harness contract](HARNESS.md) defines the available tools. Use local action recording for generated outbound email actions. Webhook registration is backend integration work; no webhook-management UI is required.
+The [harness overview](../packages/harness/README.md) describes the supplied execution loop. Use local action recording for generated outbound email actions. Webhook registration is backend integration work; no webhook-management UI is required.
 
 ## Local replay
 
-A replay script reads a saved synthetic webhook event and sends an HTTP POST to your local receiving endpoint. Sending the same event again lets you exercise duplicate delivery; changing the input lets you test other cases without sending another email.
+We supply a replay script, a signing helper, and a sample webhook payload referencing trial inbox/message IDs. Use them to post test events to your local receiver, and create payload variants as needed. Signature verification, payload validation, and routing remain your implementation.
 
-Create the payloads and script yourself using the [documented webhook contract](https://docs.agentmail.to/webhooks-overview). Exercise the same receiving, validation, and routing path used by live events, and document how local test signatures are generated and verified.
+AgentMail handles live delivery under its [webhook contract](https://docs.agentmail.to/webhooks-overview). Replay is only a local testing helper and exercises the same receiving path.
 
 Local replay needs no public tunnel and is sufficient to demonstrate the flow. Live AgentMail HTTP deliveries require a reachable URL. Build the registration path, but a live public endpoint is not required for the trial.
 

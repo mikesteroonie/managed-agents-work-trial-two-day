@@ -2,6 +2,8 @@
 
 The AgentMail team will provide a local execution harness and document its tested interface before the trial. It supplies model execution, predictable test modes, and a way to record proposed external actions locally.
 
+The team will document the fixed model and available AgentMail tool capabilities. You implement the API tool bindings; model selection and tool-permissions settings are not part of the product UI for this trial.
+
 ## Shared execution contract
 
 The harness accepts agent configuration, email input/context, and tool bindings. It emits execution events, tool activity, and a result or failure. Instructions and result content come from the user-defined agent; there are no preset business workflows.

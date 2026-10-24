@@ -1,16 +1,18 @@
-# Rho billing agent scenario
+# Example agent configurations
 
-Rho is the real customer context for this trial: their team wants to create agents for customers without building and hosting each agent service.
+Rho is the customer context: its team wants to create agents for customers without building and hosting each agent service.
 
-Everything below is invented for the exercise. Harbor Operations is a fictional customer workspace, and all contacts use reserved example domains. These are not Rho's operating policies.
+The following examples are fictional configurations for Harbor Operations, an invented customer workspace. All contacts use reserved example domains. These are not Rho's policies or real customer data.
 
-## Workflow
+Use these to exercise one shared managed-agent product. Instructions and context should be configuration, not branches in application code. Customers should be able to provide other instructions for the same harness and toolset.
 
-An invoice arrives at invoices@harbor.example. The agent should identify the invoice details, prepare a useful reply, and identify who needs to be CC'd in the thread.
+## Example 1: Billing coordination
 
-For this example, accounts payable handles invoice intake. The purchase owner can confirm the invoice relates to their team's order.
+Inbox: invoices@harbor.example.
 
-## Routing context
+Suggested instructions: Read the incoming invoice, summarize the useful details, and prepare a response that includes appropriate contacts from the supplied context. Explain uncertainty when the purchase owner is unclear. Do not claim payment has been approved or executed.
+
+Example context:
 
 | Role | Address | Responsibility |
 | --- | --- | --- |
@@ -18,10 +20,21 @@ For this example, accounts payable handles invoice intake. The purchase owner ca
 | Engineering purchase owner | engineering-owner@harbor.example | Engineering purchases; purchase order ENG-204 |
 | IT purchase owner | it-owner@harbor.example | IT purchases; purchase order IT-108 |
 
-The available routing context may be incomplete. An annual software license without a purchase order could belong to more than one team. Do not invent an owner or claim payment has been approved.
+Try the invoice, missing-owner, and corrected-invoice emails. Their results may include invoice details and proposed recipients.
 
-## Starting instructions
+## Example 2: Support coordination
 
-Read the incoming invoice email. Extract the useful invoice information, draft a response, and select relevant CC recipients from the supplied context. Explain uncertainty when the owner or invoice details are unclear. Do not approve or execute payments.
+Inbox: support@harbor.example.
 
-The user should be able to configure the agent's instructions. You decide how to present its output and any proposed action.
+Suggested instructions: Read the customer issue, summarize it, and prepare an acknowledgement. Identify a relevant engineer from the supplied context if possible. Ask for missing details and do not claim the issue is fixed. Record any proposed email action through the supplied tool.
+
+Example context:
+
+| Area | Address | Responsibility |
+| --- | --- | --- |
+| Integrations | integrations-engineer@harbor.example | Webhook delivery and API integration |
+| Dashboard | dashboard-engineer@harbor.example | Console pages, access, and user-interface errors |
+
+Try the webhook support email. Its result may include a problem summary and a proposed engineer to CC.
+
+The two configurations need not produce identical content. The platform should save and display their results and tool activity through the same underlying concepts and execution path.

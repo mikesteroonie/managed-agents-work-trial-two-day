@@ -2,16 +2,18 @@
 
 The AgentMail team is preparing the local execution adapter. Its tested interface and examples will be added before the trial.
 
-The harness accepts agent instructions, an incoming invoice email, and the supplied customer routing context. It returns invoice information, a proposed reply, and CC recipients, or an execution failure. Its exact typed contract will be documented here.
+## Shared execution contract
 
-It runs locally and may call a hosted model with supplied credentials. Any email action uses a local recording stub; it never sends real email.
+The harness accepts an agent's configuration (instructions, supplied context, and available tools) plus an input. It emits execution events and a final result or failure. The same contract must work for different agent purposes.
 
-The adapter will provide repeatable success, delay, and failure scenarios as well as real model execution. Application persistence, execution coordination, duplicate handling, and retry policy belong to the candidate's application.
+Document the generic event and result types, including tool calls and their outcomes. Output content is determined by the configured agent; invoice fields, reply drafts, and CC recipients are example content, not mandatory fields in every run.
 
-## Example email format
+The harness runs locally and may call a hosted model with supplied credentials. Provided tools record external actions locally instead of sending real email or executing payments.
 
-The files in fixtures/emails are synthetic normalized inputs for the exercise, not AgentMail's public webhook schema.
+Supply repeatable success, delay, tool-activity, and failure scenarios as well as real model execution. The harness does not provide the application's configuration storage, run database, background coordination, duplicate handling, or retry policy.
 
-Each includes event_id, message_id, inbox_id, thread_id, received_at, from, to, subject, and text. Inbox and contact addresses are fictional. Invoice content is already text; no PDF parser is required.
+## Example inputs
 
-The correction email is a new event in the same thread and repeats the invoice details. Replaying a file resends the same event. Decide how your product should represent those situations.
+The JSON files in fixtures/emails are synthetic normalized inputs, not AgentMail's public webhook schema. Each includes event_id, message_id, inbox_id, thread_id, received_at, from, to, subject, and text.
+
+The [scenario file](../fixtures/company.md) contains billing and support configuration examples. Their inputs use different inboxes, but both go through the same harness. Replaying a file resends the same event. No PDF parser or application-specific email classifier is required.

@@ -1,0 +1,13 @@
+{
+  "event_id": "event_support_004",
+  "message_id": "message_support_004",
+  "inbox_id": "inbox_harbor_support",
+  "thread_id": "thread_support_004",
+  "received_at": "2026-10-20T10:00:00Z",
+  "from": "casey@customer.example",
+  "to": [
+    "support@harbor.example"
+  ],
+  "subject": "Webhook events are not reaching our integration",
+  "text": "Our dashboard shows new activity, but our integration stopped receiving webhook events this morning. Can you help us identify what to check and include someone who owns the integration? We have not yet checked our endpoint logs."
+}

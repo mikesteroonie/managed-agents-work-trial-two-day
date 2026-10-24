@@ -1,49 +1,55 @@
-# Managed email agents
+# Managed agents
 
-Rho is an AgentMail customer. People on their team want to create email agents for their customers without having to build and host the surrounding agent infrastructure.
+Rho is an AgentMail customer. People on their team want to create agents for their customers without building and hosting a separate service for each one.
 
 ## The problem
 
-A billing agent could read an invoice and bring the right people into its email thread. A support agent could identify which engineer to CC. The model is one part of that experience: someone still has to configure the agent, connect its inbox, and understand what it did.
+Customers have different jobs for agents to do. Today, getting one running involves more than describing the task: someone needs to connect its inputs and tools, run it, retain its state, and make its work understandable.
 
-We want to make that experience usable as a product.
+We want a shared product and backend that handles those responsibilities so a customer can create an agent by configuring its behavior.
 
 ## Who is the customer?
 
-Build for a person on Rho's team setting up an agent for a customer. They know the workflow they want, but should not have to write and operate an agent service to get it running.
+Build for a person on Rho's team creating and operating agents for customers. For example:
 
-For this project, focus on a **billing agent that processes incoming invoices and identifies the people to CC in the thread**. The included [customer scenario](fixtures/company.md), invoice emails, and routing contacts are synthetic examples, not real Rho policies or customer data.
+- A billing agent might process invoices and CC the appropriate people.
+- A support agent might investigate an incoming issue and identify which engineer to CC.
+
+These illustrate different uses of the same infrastructure. The product should support customer-defined behavior through configuration and the supplied harness, without changes to application code for each use case.
+
+The [example scenarios](fixtures/company.md) and inputs are synthetic. They are starting configurations to try, not business rules to hardcode into the product.
 
 ## What we'd like you to build
 
-Build the first version of a managed email agent experience: **configure an agent, process an invoice email, and understand its proposed action.**
+Build a managed-agent product where someone can **create an agent, define its behavior, run it, and inspect its work**.
 
 The user should be able to:
 
-- Create an agent with instructions and a connection to a provided inbox.
-- Process an incoming invoice email using the supplied execution harness.
-- Inspect the invoice information, proposed reply, and selected CC recipients alongside the original email.
-- Understand what is happening and when execution has failed or needs attention.
-- Return later and find the saved configuration and results.
+- Create agents with different instructions and connect them to provided inputs and tools.
+- Run an agent on a supplied input through the execution harness.
+- Understand its progress, inspect its input, output and tool activity, and see when execution fails.
+- Return later and find saved agents and their results.
 
-The user should also be able to update the agent's instructions, leave while emails are processed in the background, and return to inspect its run history.
+Demonstrate two differently configured agents using the same creation, execution, and inspection flow. Billing and support are supplied examples; neither requires a separate screen, API, or business-specific implementation.
+
+The user should also be able to update an agent's configuration, leave while work runs in the background, and return to inspect its run history.
 
 ## Scope
 
-Build a working Next.js frontend and backend with application data persisted in Postgres. You own the schema, APIs, validation, background execution, and experience.
+Build a working Next.js frontend and backend with application data persisted in Postgres. You own the configuration experience, schema, APIs, validation, background execution, and execution integration.
 
-Processing should continue independently of an open browser. Decide what happens when an event arrives again, execution is interrupted, or someone wants to retry. Implement a coherent approach within the available time and make its limitations clear. The retry policy, controls, and data model are yours to design.
+Processing should continue independently of an open browser. Decide what happens when an input arrives again, execution is interrupted, or someone wants to retry. Implement a coherent approach within the available time and make its limitations clear. The retry policy, controls, and data model are yours to design.
 
-Use one customer workspace and the supplied invoice text; PDF extraction, payment execution, authentication, and deployment are outside scope. Produce a draft or record a simulated email action with the chosen CC recipients. Do not send real email. The support-agent example is context for discussing generalization, not another workflow to build.
+Keep the infrastructure bounded: one customer workspace, email as the input type, and the supplied harness and toolset are enough. Arbitrary-code hosting, a visual workflow builder, new tool integrations, authentication, and deployment are outside scope. Record external actions through local stubs; do not send real email or execute payments.
 
 ## Questions to consider
 
-- What does the person setting up this agent need to know, and what should happen automatically?
-- What would make them trust that the invoice reached the right people?
-- What should the product do when the owner is unclear or the invoice changes?
-- How does your system behave if the same event arrives twice or an execution is retried?
-- Which information belongs in the interface, and which belongs in diagnostic detail?
-- What would carry over to a support agent that identifies an engineer to CC?
+- What does a customer need to configure to create a useful agent? What can be handled for them?
+- Which concepts belong to the shared platform, and which belong in an agent's configuration?
+- How can someone understand what an unfamiliar agent did and whether it succeeded?
+- How does your system behave if an input arrives twice or an execution is retried?
+- What should happen when an agent's instructions or available tools change?
+- Can another use case fit without changing the application's schema or adding a dedicated workflow?
 
 ## Working together
 
@@ -55,6 +61,6 @@ At the end, show the working experience and walk through the decisions behind it
 
 ## Development environment
 
-Use Next.js and TypeScript, Postgres, and the supplied local execution harness. We provide the starter, database access, model access, and synthetic inputs. You choose the application architecture.
+Use Next.js and TypeScript, Postgres, and the supplied local execution harness. We provide the starter, database access, model access, example inputs, and tools. You choose the application architecture.
 
 See [setup](docs/SETUP.md) and [the harness contract](docs/HARNESS.md) for their preparation status. Keep credentials on the server and out of source control.

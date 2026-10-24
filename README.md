@@ -41,17 +41,16 @@ Two customer requests should work through this interface:
 
 - Implement backend updates for an existing agent's instructions and persisted pause/resume state. New events after a saved edit use the updated configuration.
 - Enforce pause in the backend: no new executions start while paused. Choose and explain what happens to queued work, active runs, and emails arriving during the pause.
-- Execute in the background: acknowledge incoming HTTP events before the agent finishes, and continue working when the browser closes. You choose the execution mechanism; a separate worker or queue is not prescribed.
+
+Execution within the local event-handler request is acceptable. You choose the execution architecture; a separate worker or queue is optional.
 
 Create synthetic payloads matching the documented webhook contract and a small local replay script that posts them to your receiving endpoint. It should exercise the same event-handling path as live delivery. Local replay is sufficient for the demo; see the [AgentMail integration guide](docs/AGENTMAIL.md) for endpoints and testing details.
 
-### When an execution fails
+### Product behavior
 
-A customer relying on an agent needs to understand what happened and what they can do next when it fails.
+Anticipate edge cases and failure modes across setup, saving, execution, and interpreting results. Prioritize those that matter for this product, implement appropriate behavior, and explain any remaining limitations. Keep the customer experience consistent with what the backend knows.
 
-Handle **one terminal run failure reported by the supplied harness**, from persisted application state to a clear explanation and usable next step in the UI. Retain useful input/activity and failure information. The harness owns the agent loop and recovery within it; you do not implement tool retries. A recovered tool error can still produce a successful run. You choose what the customer can do after a terminal failure; starting a new run is optional.
-
-Be prepared to discuss what would happen if the execution process stopped before recording a result, or an event arrived again. Automatic crash recovery and concurrent duplicate-delivery guarantees are outside the required build.
+The supplied harness owns the agent loop and recovery within it. You own the application around it, including how its outcomes are stored and presented.
 
 ## What we provide
 
@@ -70,7 +69,7 @@ Run history, configuration versioning, rollback, inbox reassignment, backlog man
 - How will someone know what the agent can do and whether it is ready?
 - What should they see first in a result, and which details should be available on demand?
 - Why do your data model and API boundaries fit this experience?
-- What can the customer safely do next after your chosen failure?
+- Which edge cases matter most here, and what should the customer experience when they occur?
 
 ## Working together
 

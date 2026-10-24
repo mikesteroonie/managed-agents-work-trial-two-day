@@ -10,7 +10,7 @@ The harness accepts agent configuration, email input/context, and tool bindings.
 
 The harness runs locally and may call a hosted model with supplied credentials. Its test modes cover success, delay, tool activity, and terminal failure, including failure after some recorded activity. Use local action recording when testing generated email actions.
 
-Use the terminal-failure mode to implement the experience required in the README. You own invocation, application storage, presentation of the outcome, and the customer's next step. Any optional action to start another run is an application decision; retries and recovery inside the supplied loop are not your responsibility. Automatic crash recovery and concurrent duplicate-delivery guarantees are not required; no worker or job system is supplied or prescribed.
+Use the test modes to explore edge cases relevant to your design. You own invocation, application storage, presentation of outcomes, and the customer's next step. Retries and recovery inside the supplied loop belong to the harness. You choose the application's execution architecture; no separate worker or job system is required or supplied.
 
 ## AgentMail integration
 

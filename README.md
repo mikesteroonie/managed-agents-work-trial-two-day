@@ -56,7 +56,7 @@ The supplied harness owns the agent loop and recovery within it. You own the app
 
 Next.js/TypeScript and a console shell, an empty Postgres database, a configured **server-side AgentMail SDK client**, trial credentials, and a local execution harness with model access and predictable test modes. Use the harness's local action-recording mode when testing generated email actions.
 
-You own the product screens, application APIs, schema, event handling, and execution integration. The [setup guide](docs/SETUP.md), [AgentMail endpoint guide](docs/AGENTMAIL.md), and [harness overview](packages/harness/README.md) describe the starter and its preparation status. Keep credentials server-side and out of source control.
+You own the product screens, application APIs, schema, event handling, and execution integration. The [setup guide](docs/SETUP.md) covers the planned starter and execution harness; the [AgentMail endpoint guide](docs/AGENTMAIL.md) lists integration points. Keep credentials server-side and out of source control.
 
 ## Boundaries
 

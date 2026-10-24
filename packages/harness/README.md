@@ -1,4 +1,0 @@
-- The team supplies a local model/tool loop with funded model access and fixed tool schemas.
-- It accepts instructions, email context, and your tool bindings; it returns final status, output, and any error.
-- A client wrapper records outgoing actions in test mode; success, slow, and failure modes are supplied.
-- You implement tool bindings, webhook integration, application execution state, database storage, and UI.

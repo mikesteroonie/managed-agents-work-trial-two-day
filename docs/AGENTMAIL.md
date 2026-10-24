@@ -16,7 +16,7 @@ These are existing AgentMail endpoints, not routes you need to reimplement. Use 
 | Register incoming-email delivery | `POST /v0/webhooks`, subscribing to `message.received` | [Create webhook](https://docs.agentmail.to/api-reference/webhooks/create) |
 | Reply, including CC recipients when relevant | `POST /v0/inboxes/:inbox_id/messages/:message_id/reply` | [Reply to message](https://docs.agentmail.to/api-reference/inboxes/messages/reply) |
 
-The [harness overview](../packages/harness/README.md) describes the supplied execution loop. Use local action recording for generated outbound email actions. Webhook registration is backend integration work; no webhook-management UI is required.
+The [harness overview](SETUP.md#execution-harness) describes the supplied execution loop. Use local action recording for generated outbound email actions. Webhook registration is backend integration work; no webhook-management UI is required.
 
 ## Local replay
 

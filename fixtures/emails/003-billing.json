@@ -1,0 +1,13 @@
+{
+  "event_id": "event_billing_003",
+  "message_id": "message_billing_003",
+  "inbox_id": "inbox_northstar_support",
+  "thread_id": "thread_billing",
+  "received_at": "2026-10-20T10:00:00Z",
+  "from": "sam@customer.example",
+  "to": [
+    "support@northstar.example"
+  ],
+  "subject": "Please refund a charge",
+  "text": "I think our team was charged twice. Can you refund the extra payment? I do not have the invoice number with me."
+}

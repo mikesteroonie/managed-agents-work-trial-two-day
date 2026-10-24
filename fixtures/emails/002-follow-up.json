@@ -1,0 +1,13 @@
+{
+  "event_id": "event_export_002",
+  "message_id": "message_export_002",
+  "inbox_id": "inbox_northstar_support",
+  "thread_id": "thread_export",
+  "received_at": "2026-10-20T09:10:00Z",
+  "from": "alex@customer.example",
+  "to": [
+    "support@northstar.example"
+  ],
+  "subject": "Re: Export booking history",
+  "text": "Thanks. Does that export also include canceled bookings from eleven months ago?"
+}

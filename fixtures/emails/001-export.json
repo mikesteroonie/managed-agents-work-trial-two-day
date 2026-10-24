@@ -1,0 +1,13 @@
+{
+  "event_id": "event_export_001",
+  "message_id": "message_export_001",
+  "inbox_id": "inbox_northstar_support",
+  "thread_id": "thread_export",
+  "received_at": "2026-10-20T09:00:00Z",
+  "from": "alex@customer.example",
+  "to": [
+    "support@northstar.example"
+  ],
+  "subject": "Export booking history",
+  "text": "Hi, I am our workspace administrator. Can I export last month's completed and canceled bookings? Where should I go?"
+}

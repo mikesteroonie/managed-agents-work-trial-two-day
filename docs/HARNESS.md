@@ -6,7 +6,7 @@ The team will document the fixed model and available AgentMail tool capabilities
 
 ## Shared execution contract
 
-The harness accepts agent configuration, email input/context, and tool bindings. It emits activity and an explicit final success or failure outcome. A tool error is intermediate activity: the loop may recover and still succeed. Use the final outcome to determine run status. Instructions and result content come from the user-defined agent; there are no preset business workflows.
+The harness accepts agent configuration, email input/context, and tool bindings. It emits activity and an explicit final success or failure outcome. A tool error is intermediate activity: the loop may recover and still succeed. Use the final outcome to determine run status. Persist the latest run's status, final output, and any terminal error for the UI; storing or displaying intermediate tool activity is not required. Instructions and result content come from the user-defined agent; there are no preset business workflows.
 
 The harness runs locally and may call a hosted model with supplied credentials. Its test modes cover success, delay, tool activity, and terminal failure, including failure after some recorded activity. Use local action recording when testing generated email actions.
 

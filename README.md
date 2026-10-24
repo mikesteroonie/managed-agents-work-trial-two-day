@@ -26,7 +26,7 @@ The model and available AgentMail tools are fixed for the trial. Make their capa
 - List saved agents and reopen their configuration. Show the linked inbox, pause state, and execution status.
 - Edit and save the instructions/context of an existing agent.
 - Pause and resume an agent, making clear when these changes take effect.
-- Inspect the latest run's input, status, output, tool activity, and any error. Retain saved configuration and the latest result after refresh.
+- Show the latest run's status, final output, and an error if it failed. Retain saved configuration and the latest result after refresh.
 
 Two customer requests should work through this interface:
 
@@ -37,7 +37,7 @@ Two customer requests should work through this interface:
 
 - Build application APIs and a Postgres schema to create, list, and retrieve saved agents and their latest run data. You choose the route structure, validation, tables, and relationships.
 - Use the supplied AgentMail client for inbox/message access and agent tool bindings. Implement webhook registration, the receiving endpoint, event parsing/validation, and inbox-to-agent routing using AgentMail's existing services.
-- Trigger the supplied execution harness from incoming events and persist results, status, tool activity, and failures for the UI. Execution must not depend on someone pressing Run.
+- Trigger the supplied execution harness from incoming events and persist the latest run's status, final output, and any terminal error for the UI. Execution must not depend on someone pressing Run.
 
 - Implement backend updates for an existing agent's instructions and persisted pause/resume state. New events after a saved edit use the updated configuration.
 - Enforce pause in the backend: no new executions start while paused. Choose and explain what happens to queued work, active runs, and emails arriving during the pause.
@@ -67,7 +67,7 @@ Run history, configuration versioning, rollback, inbox reassignment, backlog man
 ## Questions to consider
 
 - How will someone know what the agent can do and whether it is ready?
-- What should they see first in a result, and which details should be available on demand?
+- What should a customer understand from the latest result?
 - Why do your data model and API boundaries fit this experience?
 - Which edge cases matter most here, and what should the customer experience when they occur?
 

@@ -1,6 +1,6 @@
 # Managed agents
 
-Rho is an AgentMail customer. People on their team want to create agents for their customers without building and hosting a separate service for each one.
+AgentMail gives agents email inboxes. We want customers to be able to create and operate agents on top of that infrastructure without building and hosting a separate service for each one.
 
 ## The problem
 
@@ -10,12 +10,14 @@ We want a shared product and backend that handles those responsibilities so a cu
 
 ## Who is the customer?
 
-Build for a person on Rho's team creating and operating agents for customers. For example:
+Build for someone configuring and operating email agents for their team or customers. They know the job they want done and need a product that handles the setup and execution. Different users will bring different instructions, context, and workflows. For example:
 
 - A billing agent might process invoices and CC the appropriate people.
 - A support agent might investigate an incoming issue and identify which engineer to CC.
 
 These illustrate different uses of the same infrastructure. The product should support customer-defined behavior through configuration and the supplied harness, without changes to application code for each use case.
+
+Rho, an AgentMail customer whose team wants to create agents for its customers, is one example of this need. The platform should work across customers and use cases.
 
 The [example scenarios](fixtures/company.md) and inputs are synthetic. They are starting configurations to try, not business rules to hardcode into the product.
 

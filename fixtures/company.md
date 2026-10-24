@@ -1,8 +1,8 @@
 # Example agent configurations
 
-Rho is the customer context: its team wants to create agents for customers without building and hosting each agent service.
+These examples illustrate how different customer needs can be expressed as agent configuration.
 
-The following examples are fictional configurations for Harbor Operations, an invented customer workspace. All contacts use reserved example domains. These are not Rho's policies or real customer data.
+The following examples are fictional configurations for Harbor Operations, an invented customer workspace. All contacts use reserved example domains. These are not real customer policies or data.
 
 Use these to exercise one shared managed-agent product. Instructions and context should be configuration, not branches in application code. Customers should be able to provide other instructions for the same harness and toolset.
 
